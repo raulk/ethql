@@ -6,7 +6,7 @@ type Query {
   block(number: BlockNumber, hash: Hash, tag: BlockTag): Block
 
   "Selects a block based on a reference block and an offset from it."
-  blockOffset(offset: BlockOffset!): Block
+  blockOffset(number: BlockNumber, hash: Hash, offset: Int, tag: BlockTag): Block
 
   "Selects an arbitrary set of blocks based on their numbers or hashes."
   blocks(numbers: [BlockNumber], hashes: [Hash]): [Block]
@@ -108,15 +108,6 @@ enum BlockTag {
 }
 
 """
-Input object to select a block by offset.
-"""
-input BlockOffset {
-  number: Long
-  hash: Hash
-  offset: Int
-}
-
-"""
 The storage of this contract.
 """
 type Storage {
@@ -191,7 +182,7 @@ type SolidityDynamicArray {
 
   "Steps into the fixed array at this index."
   solidityFixedArray(at: Int!): SolidityFixedArray
-  
+
   "Steps into the dynamic array at this index."
   solidityDynamicArray(at: Int!): SolidityDynamicArray
 }
@@ -274,8 +265,8 @@ enum TransactionStatus {
 }
 
 enum KeyType {
-  address,
-  number,
+  address
+  number
   string
 }
 
